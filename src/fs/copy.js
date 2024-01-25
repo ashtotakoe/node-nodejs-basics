@@ -19,7 +19,6 @@ const copy = async () => {
       }
     })
   } catch (err) {
-    console.log(err)
     throw new Error('FS operation failed')
   }
 }
