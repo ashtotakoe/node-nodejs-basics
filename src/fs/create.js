@@ -1,15 +1,17 @@
 import { writeFile } from 'fs/promises'
 import { existsSync } from 'fs'
-import path from 'path'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-const { dirname } = import.meta
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const targetFilePath = path.resolve(dirname, 'files', 'hello.txt')
-
+const targetFileName = 'fresh.txt'
+const targetFilePath = resolve(__dirname, 'files', targetFileName)
+const text = 'I am fresh and young'
 
 const create = async () => {
   if (!existsSync(targetFilePath)) {
-    await writeFile(targetFilePath, 'I am fresh and young')
+    await writeFile(targetFilePath, text)
 
     return
   }
@@ -18,4 +20,3 @@ const create = async () => {
 }
 
 await create()
-
