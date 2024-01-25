@@ -1,5 +1,22 @@
-const read = async () => {
-    // Write your code here 
-};
+import fs from 'fs/promises'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-await read();
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const targetFileName = 'fileToRead.txt'
+const targetFilePath = path.join(__dirname, 'files', targetFileName)
+
+const read = async () => {
+  try {
+    const targetFile = await fs.open(targetFilePath)
+
+    const readStream = targetFile.createReadStream()
+    readStream.on('data', (data) => {
+      console.log(data.toString())
+    })
+  } catch (err) {
+    throw new Error('FS operation failed')
+  }
+}
+await read()
