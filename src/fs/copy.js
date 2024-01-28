@@ -1,8 +1,11 @@
 import { mkdir, readdir, copyFile } from 'fs/promises'
-import { join } from 'path'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
 
-const dirToCopyPath = join(import.meta.dirname, 'files')
-const dirToCopyIntoPath = join(import.meta.dirname, 'files_copy')
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const dirToCopyPath = join(__dirname, 'files')
+const dirToCopyIntoPath = join(__dirname, 'files_copy')
 
 const copy = async () => {
   try {
@@ -15,7 +18,10 @@ const copy = async () => {
 
     files.forEach((dirent) => {
       if (dirent.isFile()) {
-        copyFile(join(dirToCopyPath, dirent.name), join(dirToCopyIntoPath, dirent.name))
+        copyFile(
+          join(dirToCopyPath, dirent.name),
+          join(dirToCopyIntoPath, dirent.name)
+        )
       }
     })
   } catch (err) {
