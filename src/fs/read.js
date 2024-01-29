@@ -11,10 +11,11 @@ const read = async () => {
   try {
     const targetFile = await fs.open(targetFilePath)
 
-    const readStream = targetFile.createReadStream()
-    readStream.on('data', (data) => {
-      console.log(data.toString())
-    })
+    const content = await targetFile.readFile()
+
+    console.log(content.toString())
+
+    targetFile.close()
   } catch (err) {
     throw new Error('FS operation failed')
   }

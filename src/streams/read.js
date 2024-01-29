@@ -11,13 +11,14 @@ const read = async () => {
 
   const stream = target.createReadStream()
 
-  stream.on('data', (data) => {
-    stdout.write(data.toString())
-  })
-
-  stream.on('end', () => {
-    stdout.write('\n')
-  })
+  stream
+    .on('data', (data) => {
+      stdout.write(data.toString())
+    })
+    .on('end', () => {
+      stdout.write('\n')
+      target.close()
+    })
 }
 
 await read()

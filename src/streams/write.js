@@ -11,13 +11,14 @@ const write = async () => {
 
   const stream = target.createWriteStream()
 
-  stdin.on('data', (data) => {
-    stream.write(data.toString())
-  })
-
-  stdin.on('end', () => {
-    stream.end()
-  })
+  stdin
+    .on('data', (data) => {
+      stream.write(data.toString())
+    })
+    .on('end', () => {
+      stream.end()
+      target.close()
+    })
 }
 
 await write()
