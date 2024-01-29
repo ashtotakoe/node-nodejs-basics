@@ -13,9 +13,9 @@ const toSHA256 = new Transform({
   transform(chunk, encoding, callback) {
     const content = chunk.toString()
 
-    const hash = createHash('sha256').update(content).digest()
+    const hash = createHash('sha256').update(content).digest('hex')
 
-    callback(null, hash)
+    callback(null, `${hash} \n`)
   },
 })
 
